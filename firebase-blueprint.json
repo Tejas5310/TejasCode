@@ -1,0 +1,328 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Student profile, registration details, bio, XP, streak, saved courses, social connections, and daily AI quota usage.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "bio": { "type": "string" },
+        "learningGoal": { "type": "string" },
+        "experienceLevel": { "type": "string" },
+        "preferredLanguage": { "type": "string" },
+        "registered": { "type": "boolean" },
+        "xp": { "type": "integer" },
+        "streakDays": { "type": "integer" },
+        "lessonsCompleted": { "type": "integer" },
+        "totalCodingMinutes": { "type": "integer" },
+        "battlesWon": { "type": "integer" },
+        "lastActiveDate": { "type": "string" },
+        "lastLoginAt": { "type": "string" },
+        "aiQueriesUsedToday": { "type": "integer" },
+        "aiQuotaDate": { "type": "string" },
+        "completedLessonIds": { "type": "array" },
+        "savedCourseIds": { "type": "array" },
+        "badges": { "type": "array" },
+        "followingIds": { "type": "array" },
+        "blockedUserIds": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "displayName", "xp", "streakDays", "lessonsCompleted", "battlesWon", "lastActiveDate", "completedLessonIds", "createdAt", "updatedAt"]
+    },
+    "PlanConfig": {
+      "title": "PlanConfig",
+      "description": "Admin-configured Monthly and Yearly Premium pricing, currency, trial, and billing provider identifiers.",
+      "type": "object",
+      "properties": {
+        "monthlyPriceMinor": { "type": "integer" },
+        "yearlyPriceMinor": { "type": "integer" },
+        "currency": { "type": "string" },
+        "currencySymbol": { "type": "string" },
+        "trialDays": { "type": "integer" },
+        "monthlyPlayProductId": { "type": "string" },
+        "monthlyPlayBasePlanId": { "type": "string" },
+        "yearlyPlayProductId": { "type": "string" },
+        "yearlyPlayBasePlanId": { "type": "string" },
+        "razorpayMonthlyPlanId": { "type": "string" },
+        "razorpayYearlyPlanId": { "type": "string" },
+        "razorpayEnabled": { "type": "boolean" },
+        "freeDailyAiLimit": { "type": "integer" },
+        "proDailyAiLimit": { "type": "integer" },
+        "billingTermsSummary": { "type": "string" },
+        "updatedBy": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["monthlyPriceMinor", "yearlyPriceMinor", "currency", "currencySymbol", "trialDays", "razorpayEnabled", "updatedAt"]
+    },
+    "UserEntitlement": {
+      "title": "UserEntitlement",
+      "description": "Backend-verified subscription entitlement state for a user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "tier": { "type": "string", "enum": ["free", "pro"] },
+        "status": { "type": "string" },
+        "provider": { "type": "string" },
+        "billingInterval": { "type": "string" },
+        "subscriptionId": { "type": "string" },
+        "currentPeriodEnd": { "type": "string", "format": "date-time" },
+        "cancelAtPeriodEnd": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "SubscriptionRecord": {
+      "title": "SubscriptionRecord",
+      "description": "Backend-authoritative subscription lifecycle record.",
+      "type": "object",
+      "properties": {
+        "subscriptionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "provider": { "type": "string", "enum": ["google_play", "razorpay"] },
+        "providerSubscriptionId": { "type": "string" },
+        "productId": { "type": "string" },
+        "billingInterval": { "type": "string", "enum": ["monthly", "yearly"] },
+        "amountMinorUnits": { "type": "integer" },
+        "currency": { "type": "string" },
+        "purchaseTokenOrRef": { "type": "string" },
+        "status": { "type": "string" },
+        "startDate": { "type": "string", "format": "date-time" },
+        "renewalDate": { "type": "string", "format": "date-time" },
+        "expiryDate": { "type": "string", "format": "date-time" },
+        "cancellationDate": { "type": "string", "format": "date-time" },
+        "lastVerifiedPaymentAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "PaymentTransaction": {
+      "title": "PaymentTransaction",
+      "description": "Verified payment and refund transaction record.",
+      "type": "object",
+      "properties": {
+        "transactionId": { "type": "string" },
+        "userId": { "type": "string" },
+        "subscriptionId": { "type": "string" },
+        "provider": { "type": "string" },
+        "providerPaymentId": { "type": "string" },
+        "billingInterval": { "type": "string" },
+        "grossAmountMinor": { "type": "integer" },
+        "gatewayFeeMinor": { "type": "integer" },
+        "taxMinor": { "type": "integer" },
+        "netAmountMinor": { "type": "integer" },
+        "currency": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "SettlementRecord": {
+      "title": "SettlementRecord",
+      "description": "Merchant bank settlement payout tracking record.",
+      "type": "object",
+      "properties": {
+        "settlementId": { "type": "string" },
+        "provider": { "type": "string" },
+        "grossMinor": { "type": "integer" },
+        "feesMinor": { "type": "integer" },
+        "netPayoutMinor": { "type": "integer" },
+        "currency": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "settled"] },
+        "utrReference": { "type": "string" },
+        "settledAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ManagedCourse": {
+      "title": "ManagedCourse",
+      "description": "Admin-managed coding course module for TejasCode.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "language": { "type": "string" },
+        "category": { "type": "string" },
+        "difficulty": { "type": "string" },
+        "durationMinutes": { "type": "integer" },
+        "xpReward": { "type": "integer" },
+        "isPremium": { "type": "boolean" },
+        "resourceUrl": { "type": "string" },
+        "starterCode": { "type": "string" },
+        "lessonSummary": { "type": "string" },
+        "quizQuestion": { "type": "string" },
+        "quizOptions": { "type": "array" },
+        "correctOptionIndex": { "type": "integer" },
+        "visibility": { "type": "string", "enum": ["public", "draft"] },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "subtitle", "language", "category", "difficulty", "durationMinutes", "xpReward", "starterCode", "lessonSummary", "quizQuestion", "quizOptions", "correctOptionIndex", "visibility", "createdBy", "createdAt", "updatedAt"]
+    },
+    "CodeSnippet": {
+      "title": "CodeSnippet",
+      "description": "Saved code editor snippet created by the user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "language": { "type": "string" },
+        "code": { "type": "string" },
+        "lastOutput": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "language", "code", "createdAt", "updatedAt"]
+    },
+    "Certificate": {
+      "title": "Certificate",
+      "description": "Verified track completion certificate.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "trackId": { "type": "string" },
+        "trackTitle": { "type": "string" },
+        "recipientName": { "type": "string" },
+        "verificationCode": { "type": "string" },
+        "earnedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "trackId", "trackTitle", "recipientName", "verificationCode", "earnedAt"]
+    },
+    "LeaderboardEntry": {
+      "title": "LeaderboardEntry",
+      "description": "Public leaderboard ranking record for a learner.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "xp": { "type": "integer" },
+        "streakDays": { "type": "integer" },
+        "battlesWon": { "type": "integer" },
+        "visibility": { "type": "string", "enum": ["public"] },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "displayName", "xp", "streakDays", "battlesWon", "visibility", "updatedAt"]
+    },
+    "CommunityProject": {
+      "title": "CommunityProject",
+      "description": "Code project shared with the learner community.",
+      "type": "object",
+      "properties": {
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "title": { "type": "string" },
+        "language": { "type": "string" },
+        "code": { "type": "string" },
+        "description": { "type": "string" },
+        "likesCount": { "type": "integer" },
+        "likedBy": { "type": "array" },
+        "visibility": { "type": "string", "enum": ["public"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["authorId", "authorName", "title", "language", "code", "description", "likesCount", "likedBy", "visibility", "createdAt", "updatedAt"]
+    },
+    "CommunityQuestion": {
+      "title": "CommunityQuestion",
+      "description": "Community Q&A discussion post.",
+      "type": "object",
+      "properties": {
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "language": { "type": "string" },
+        "codeSnippet": { "type": "string" },
+        "likesCount": { "type": "integer" },
+        "likedBy": { "type": "array" },
+        "replyCount": { "type": "integer" },
+        "visibility": { "type": "string", "enum": ["public", "hidden"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ModerationReport": {
+      "title": "ModerationReport",
+      "description": "User report for community safety moderation.",
+      "type": "object",
+      "properties": {
+        "reporterId": { "type": "string" },
+        "targetType": { "type": "string" },
+        "targetId": { "type": "string" },
+        "reason": { "type": "string" },
+        "status": { "type": "string", "enum": ["open", "resolved", "dismissed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "PlatformNotification": {
+      "title": "PlatformNotification",
+      "description": "Admin broadcast announcement for learners.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "createdBy": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "Owner-only student profile, registration info, and learning progress."
+    },
+    "/users/{userId}/entitlements/{entitlementId}": {
+      "schema": { "$ref": "#/entities/UserEntitlement" },
+      "description": "Server-authoritative Pro entitlement state; client writes denied."
+    },
+    "/users/{userId}/snippets/{snippetId}": {
+      "schema": { "$ref": "#/entities/CodeSnippet" },
+      "description": "Owner-only saved code snippets."
+    },
+    "/users/{userId}/certificates/{certId}": {
+      "schema": { "$ref": "#/entities/Certificate" },
+      "description": "Owner-only verified certificates."
+    },
+    "/plan_configs/{configId}": {
+      "schema": { "$ref": "#/entities/PlanConfig" },
+      "description": "Admin-configured Monthly and Yearly subscription pricing and provider settings."
+    },
+    "/subscriptions/{subscriptionId}": {
+      "schema": { "$ref": "#/entities/SubscriptionRecord" },
+      "description": "Backend-managed subscription records readable by owner and admin."
+    },
+    "/payment_transactions/{txId}": {
+      "schema": { "$ref": "#/entities/PaymentTransaction" },
+      "description": "Backend-managed payment transactions readable by owner and admin."
+    },
+    "/settlements/{settlementId}": {
+      "schema": { "$ref": "#/entities/SettlementRecord" },
+      "description": "Backend-reconciled bank payouts readable strictly by admin."
+    },
+    "/courses/{courseId}": {
+      "schema": { "$ref": "#/entities/ManagedCourse" },
+      "description": "Admin-managed courses readable by signed-in students when published."
+    },
+    "/leaderboard/{userId}": {
+      "schema": { "$ref": "#/entities/LeaderboardEntry" },
+      "description": "Global leaderboard readable by signed-in learners, writable only by record owner."
+    },
+    "/community_projects/{projectId}": {
+      "schema": { "$ref": "#/entities/CommunityProject" },
+      "description": "Community code showcase readable by signed-in learners."
+    },
+    "/community_qa/{postId}": {
+      "schema": { "$ref": "#/entities/CommunityQuestion" },
+      "description": "Global Q&A forum posts readable by signed-in learners."
+    },
+    "/moderation_reports/{reportId}": {
+      "schema": { "$ref": "#/entities/ModerationReport" },
+      "description": "Moderation reports submitted by users and managed by admins."
+    },
+    "/platform_notifications/{notifId}": {
+      "schema": { "$ref": "#/entities/PlatformNotification" },
+      "description": "Admin announcements readable by signed-in learners."
+    }
+  }
+}

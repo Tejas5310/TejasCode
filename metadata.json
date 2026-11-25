@@ -1,0 +1,6 @@
+{
+  "name": "TejasCode",
+  "description": "TejasCode – Learn, Code & Grow. Interactive HTML, CSS, JavaScript & Python courses, online code editor, quizzes, certificates, student progress dashboard, and admin course manager.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

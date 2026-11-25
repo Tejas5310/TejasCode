@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TejasCode</string>
+    <string name="nav_courses">Kurse</string>
+    <string name="nav_editor">Editor</string>
+    <string name="nav_tutor">KI-Tutor</string>
+    <string name="nav_quizzes">Quiz</string>
+    <string name="nav_community">Community</string>
+    <string name="nav_profile">Profil</string>
+</resources>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TejasCode</string>
+    <string name="nav_courses">课程</string>
+    <string name="nav_editor">编辑器</string>
+    <string name="nav_tutor">AI导师</string>
+    <string name="nav_quizzes">测验</string>
+    <string name="nav_community">社区</string>
+    <string name="nav_profile">我的</string>
+</resources>

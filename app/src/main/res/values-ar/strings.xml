@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TejasCode</string>
+    <string name="nav_courses">الدورات</string>
+    <string name="nav_editor">المحرر</string>
+    <string name="nav_tutor">المرشد الذكي</string>
+    <string name="nav_quizzes">الاختبارات</string>
+    <string name="nav_community">المجتمع</string>
+    <string name="nav_profile">الملف</string>
+</resources>
